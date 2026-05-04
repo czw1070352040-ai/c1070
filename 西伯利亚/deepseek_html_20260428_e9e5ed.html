@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西伯利亚耳机产品库 · 客服培训系统</title>
+    <style>
+        :root {
+            --bg: #0f0f1a;
+            --surface: #1a1a2e;
+            --surface2: #252540;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0b8;
+            --accent: #d4a843;
+            --accent2: #b8860b;
+            --tag-bg: #2a2a3c;
+            --tag-text: #c0c0d0;
+            --success: #4caf84;
+            --danger: #e0556a;
+            --border: #30304a;
+            --font: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        header p {
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #000;
+            font-weight: 600;
+            border-color: var(--accent);
+        }
+        .btn-accent:hover {
+            background: var(--accent2);
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #000;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            color: var(--accent);
+        }
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0 25px;
+        }
+        .tag {
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.15s;
+        }
+        .tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+        .product-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            transition: transform 0.15s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border-color: var(--accent);
+        }
+        .product-card h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .product-card .model {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        .product-card .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .badge {
+            background: #2a3040;
+            color: #b0c0d0;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .badge.wireless { background: #2d4a3e; color: #8de0b0; }
+        .badge.wired { background: #4a3a2d; color: #e0b88d; }
+        .badge.anc { background: #3a2d4a; color: #c8a0e0; }
+        .detail-container {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+        }
+        .detail-header {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        .detail-img {
+            width: 200px;
+            height: 200px;
+            background: var(--surface2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border: 1px dashed var(--border);
+        }
+        .detail-title h2 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+        .detail-title .model-name {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .spec-table th, .spec-table td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .spec-table th {
+            background: var(--surface2);
+            color: var(--accent);
+            width: 150px;
+            font-weight: 600;
+        }
+        .spec-table td {
+            color: #d0d0e0;
+        }
+        .back-btn {
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .quiz-container {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid var(--accent);
+        }
+        .quiz-question {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quiz-option {
+            background: var(--surface2);
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .quiz-option:hover {
+            border-color: var(--accent);
+        }
+        .quiz-option.selected {
+            border-color: var(--accent);
+            background: #2a2a18;
+        }
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: #1a3a2a;
+        }
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background: #3a1a1a;
+        }
+        .quiz-feedback {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .fade-in {
+            animation: fadeIn 0.25s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .mt-3 { margin-top: 16px; }
+        .mb-3 { margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <!-- 首页 -->
+    <div id="page-home" class="page active">
+        <header>
+            <h1>🎧 西伯利亚耳机产品库</h1>
+            <p>客服培训系统 · 快速掌握全系列产品</p>
+        </header>
+        <div class="nav-bar">
+            <button class="btn btn-accent" onclick="startQuiz()">📝 随机出题测验</button>
+        </div>
+
+        <!-- 按系列 -->
+        <div class="section-title">📂 按产品系列浏览</div>
+        <div class="tag-group" id="series-tags"></div>
+
+        <!-- 按连接方式 -->
+        <div class="section-title">🔌 按连接方式</div>
+        <div class="tag-group" id="conn-tags"></div>
+
+        <!-- 按特色标签 -->
+        <div class="section-title">🏷️ 按功能特色</div>
+        <div class="tag-group" id="feature-tags"></div>
+    </div>
+
+    <!-- 二级列表页 -->
+    <div id="page-list" class="page">
+        <button class="btn btn-outline back-btn" onclick="goHome()">← 返回首页</button>
+        <h2 id="list-title" style="color:#fff; margin-bottom:20px;"></h2>
+        <div class="product-grid" id="product-list"></div>
+    </div>
+
+    <!-- 产品详情页 -->
+    <div id="page-detail" class="page">
+        <button class="btn btn-outline back-btn" onclick="goBackFromDetail()">← 返回列表</button>
+        <div class="detail-container" id="detail-content"></div>
+    </div>
+
+    <!-- 出题页 -->
+    <div id="page-quiz" class="page">
+        <button class="btn btn-outline back-btn" onclick="goHome()">← 返回首页</button>
+        <div class="quiz-container" id="quiz-area"></div>
+    </div>
+</div>
+
+<script>
+// ==================== 产品数据 ====================
+const products = [
+    // S21系列
+    {model:"S21DC PRO", series:"S21", connection:"有线Type-C", driver:"50mm", freq:"20-20000Hz", impedance:"32±15%Ω", sensitivity:"暂无", battery:"有线", weight:"约320g", cable:"1.5m", features:["一键7.1","Type-C直连","飞翼头梁"], tags:["有线","7.1环绕","手机可用"], desc:"S21系列有线Type-C版本，一键开启7.1虚拟环绕声，Type-C接口即插即用，兼容手机、平板和电脑。", suitable:"需要手机/平板/电脑多设备通用，追求便捷即插即用的玩家。"},
+    {model:"S21DC PRO火焰风暴", series:"S21", connection:"有线Type-C", driver:"50mm", freq:"20-20000Hz", impedance:"32±15%Ω", sensitivity:"暂无", battery:"有线", weight:"约320g", cable:"1.5m", features:["火焰风暴涂装","一键7.1","Type-C"], tags:["有线","7.1环绕","限定外观"], desc:"S21DC PRO的火焰风暴限定版，核心参数相同，外观更具电竞感。", suitable:"喜欢火焰风暴外观设计，需要Type-C直连的玩家。"},
+    {model:"S21GS", series:"S21", connection:"四模(2.4G+蓝牙5.3+3.5mm+USB)", driver:"50mm", freq:"20-20000Hz", sensitivity:"97±3dB", battery:"蓝牙关灯149h/2.4G关灯106h", weight:"约375g", features:["双设备同连","快充10分钟用32h","金属自适应头梁"], tags:["无线","四模","超长续航","双设备"], desc:"S21系列无线旗舰，四模连接，149小时超长续航，支持2.4G和蓝牙同时连接双设备。", suitable:"需要无线自由、超长续航，经常在电脑和手机间切换的用户。"},
+    {model:"S21GS PRO", series:"S21", connection:"三模(2.4G+蓝牙5.3+有线)", driver:"50mm", freq:"20-20000Hz", battery:"开灯72h/关灯135h", weight:"暂无", features:["1500mAh电池","约2.5h充满"], tags:["无线","三模","长续航"], desc:"S21GS的加强版，三模连接，135小时关灯续航，充电速度快。", suitable:"追求高性能无线游戏体验，同时需要蓝牙连接手机的用户。"},
+    {model:"S21GS火焰风暴", series:"S21", connection:"四模(2.4G+蓝牙5.3+3.5mm+USB)", driver:"50mm", freq:"20-20000Hz", sensitivity:"97±3dB", battery:"蓝牙关灯149h", weight:"约375g", features:["火焰风暴涂装","双设备同连"], tags:["无线","四模","限定外观"], desc:"S21GS的火焰风暴限定版，参数与S21GS一致。", suitable:"既要S21GS的强性能，又偏爱火焰风暴外观的用户。"},
+    {model:"S21MAX", series:"S21", connection:"有线USB", driver:"50mm镀钛振膜", freq:"20-20000Hz", battery:"有线", cable:"约2m", features:["双声卡","第三代7.1","可视化线控屏","AI降噪"], tags:["有线","7.1环绕","高解析","线控屏"], desc:"S21系列有线旗舰，双声卡独立处理游戏音效与语音，第三代7.1听声辨位，线控屏实时显示状态。", suitable:"追求极致FPS听声辨位、需要独立声卡和线控屏的专业PC玩家。"},
+    {model:"S21U", series:"S21", connection:"有线USB", driver:"50mm", freq:"20-20000Hz", impedance:"32Ω", sensitivity:"105dB", battery:"有线", weight:"约300g", cable:"约2m", features:["7.1虚拟环绕声","飞翼头梁","线控开关"], tags:["有线","7.1环绕"], desc:"S21系列经典款，7.1环绕音效，线控集成音量/灯光/麦克风控制。", suitable:"预算中等、需要USB有线7.1环绕的玩家。"},
+    {model:"S21U火焰风暴", series:"S21", connection:"有线USB", driver:"50mm", impedance:"32Ω", sensitivity:"105dB", weight:"约300g", cable:"约2m", features:["火焰风暴涂装","7.1"], tags:["有线","7.1环绕","限定外观"], desc:"S21U的火焰风暴限定版。", suitable:"喜欢火焰风暴涂装的S21U用户。"},
+    {model:"S21U糖果粉", series:"S21", connection:"有线USB", driver:"50mm", impedance:"32Ω", sensitivity:"105dB", weight:"约300g", cable:"约2m", features:["粉色限定","7.1"], tags:["有线","7.1环绕","粉色"], desc:"S21U粉色限定版，颜值出众。", suitable:"女性用户或喜欢粉色外观的玩家。"},
+    {model:"S21D", series:"S21", connection:"有线3.5mm/USB", driver:"50mm", impedance:"32Ω", weight:"约300g", features:["基础款","飞翼头梁"], tags:["有线","3.5mm"], desc:"S21系列有线基础款，3.5mm接口通用性强。", suitable:"预算有限、只需基础游戏耳机功能的用户。"},
+    {model:"S21PROX", series:"S21", connection:"有线USB+Type-C双接口", driver:"50mm", impedance:"32Ω", sensitivity:"105dB", battery:"有线", cable:"约2m", features:["ANC主动降噪","7.1","双端兼容"], tags:["有线","主动降噪","7.1环绕"], desc:"带ANC主动降噪的有线耳机，USB和Type-C双接口，手机电脑通用。", suitable:"需要在嘈杂环境使用，追求安静游戏体验的用户。"},
+    {model:"S21飞天神女", series:"S21", connection:"有线USB", driver:"50mm石墨烯", weight:"约320g", features:["敦煌联名","国风涂装","7.1"], tags:["有线","限定联名","石墨烯"], desc:"敦煌博物馆联名限定款，石墨烯振膜，国风涂装。", suitable:"喜欢国风文创、收藏联名款的用户。"},
+    // S31U
+    {model:"S31U", series:"S31", connection:"有线USB", driver:"50mm", impedance:"32±15%Ω", sensitivity:"99±3dB", weight:"约228g", features:["一键7.1","G型透气耳罩","轻量化"], tags:["有线","7.1环绕","轻量化"], desc:"轻量化设计，全包式G型透气耳罩，佩戴舒适。", suitable:"长时间佩戴、注重透气性和轻便的用户。"},
+    // S11系列
+    {model:"S11D", series:"S11", connection:"有线3.5mm", driver:"50mm", weight:"约300g", features:["3.5mm直连手机"], tags:["有线","3.5mm","手机可用"], desc:"S11系列有线基础款，3.5mm接口直连手机/平板。", suitable:"手机/平板用户，需要简单有线耳机。"},
+    {model:"S11GS", series:"S11", connection:"2.4G无线(5.8GHz)+3.5mm有线", driver:"50mm", battery:"2.4G约18h", weight:"约300g", features:["5.8GHz频段","低延迟"], tags:["无线","低延迟","双模"], desc:"采用5.8GHz频段无线传输，干扰更少，延迟更低。", suitable:"需要无线但担心2.4G干扰的玩家。"},
+    {model:"S11LL", series:"S11", connection:"蓝牙+3.5mm有线", driver:"50mm", battery:"50h", weight:"约300g", features:["蓝牙双模","50h续航"], tags:["蓝牙","双模","长续航"], desc:"蓝牙和有线双模，50小时续航，手机/平板/电脑通用。", suitable:"主要用蓝牙连接手机，偶尔需要有线使用的用户。"},
+    // K03系列
+    {model:"K03S 7.1版", series:"K03", connection:"四模(2.4G+蓝牙5.3+有线)", driver:"50mm", battery:"蓝牙110h/2.4G约80h", weight:"约291g", features:["7.1环绕音效","PC驱动自定义EQ"], tags:["无线","四模","7.1环绕"], desc:"K03S的7.1版本，支持PC驱动调节EQ。", suitable:"需要无线四模并且想要7.1环绕音效的用户。"},
+    {model:"K03S", series:"K03", connection:"四模(2.4G+蓝牙5.3+有线)", driver:"50mm", battery:"蓝牙110h/2.4G约80h", weight:"约291g", features:["LED电量屏","双设备同连","55°骨轴贴合"], tags:["无线","四模","爆款","双设备"], desc:"百万销量爆款，四模连接，LED智显电量，55°骨轴设计久戴不累。", suitable:"追求无线四模、长续航和舒适佩戴，预算在200元左右的用户。"},
+    {model:"K03S进阶版", series:"K03", connection:"四模(2.4G+蓝牙+有线)", driver:"50mm", battery:"比K03S更长(2000mAh)", weight:"约310g", features:["2000mAh电池","实时耳返"], tags:["无线","四模","超大电池"], desc:"K03S升级版，电池增至2000mAh，新增实时耳返功能。", suitable:"对续航有极致要求，或需要耳返监听自己声音的用户。"},
+    // K02系列
+    {model:"K02BS", series:"K02", connection:"四模(2.4G+蓝牙5.3+3.5mm+Type-C)", driver:"50mm", battery:"蓝牙关灯170h/2.4G关灯133h", latency:"2.4G 15ms", weight:"约264g", features:["USB-A+USB-C双适配器","可插拔降噪麦"], tags:["无线","四模","超长续航","高性价比"], desc:"百元级四模卷王，170小时超长续航，15ms低延迟，双口适配器通吃所有设备。", suitable:"预算有限但需要四模无线、超长续航和多设备兼容的用户。"},
+    {model:"K02S PRO", series:"K02", connection:"四模(2.4G+蓝牙5.3+3.5mm+USB)", driver:"50mm", battery:"关灯约145h", features:["无线7.1环绕音效"], tags:["无线","四模","7.1环绕"], desc:"四模连接，支持无线7.1环绕音效，145小时续航。", suitable:"需要无线7.1音效和四模连接的用户。"},
+    // K9系列
+    {model:"K9PRO", series:"K9", connection:"有线USB", driver:"50mm石墨烯复合膜", freq:"20-20000Hz", impedance:"32Ω", features:["7.1独立声卡","线控一键7.1/ENC","自适应头梁"], tags:["有线","7.1环绕","网咖"], desc:"网咖专业款，50mm石墨烯振膜，独立声卡，线控便捷操作。", suitable:"网吧或固定场所使用，需要耐用、音质好的有线耳机。"},
+    {model:"K9U", series:"K9", connection:"有线USB", driver:"40mm/50mm镀铍球顶", impedance:"32Ω", sensitivity:"95±3dB", cable:"2.3m", features:["7.1虚拟环绕声","RGB渐变灯效"], tags:["有线","7.1环绕","RGB"], desc:"RGB七彩渐变灯效，镀铍振膜解析力优秀。", suitable:"喜欢RGB灯效，对音质有一定要求的网吧/家用玩家。"},
+    {model:"K9PLUS", series:"K9", connection:"有线USB", driver:"50mm", cable:"约2m", weight:"约413g", features:["即插即用"], tags:["有线","基础款"], desc:"K9系列基础款，USB即插即用，坚固耐用。", suitable:"网吧批量采购或预算极低的基础游戏需求。"},
+    // T系列
+    {model:"T10有线版", series:"T10", connection:"有线USB", driver:"赛事级定制", features:["四腔体物理分频","可拆卸麦克风","FPS特化"], tags:["有线","FPS","物理分频","职业级"], desc:"FPS专精旗舰，四腔体物理分频独立处理脚步声/人声/枪声，三角洲行动赛事指定。", suitable:"硬核FPS玩家，追求极致听声辨位，预算较高的用户。"},
+    {model:"T10无线版", series:"T10", connection:"五模(2.4G+蓝牙6.0+多有线)", driver:"赛事级定制", battery:"1800mAh", latency:"2.4G 16ms", features:["四腔体分频","三核异构芯片","AI-NPU降噪","双模混音"], tags:["无线","FPS","物理分频","蓝牙6.0"], desc:"T10无线旗舰，五模连接，蓝牙6.0，独立AI降噪芯片，四腔体分频同样精准。", suitable:"想要无线自由又不愿妥协FPS听声辨位精度的玩家。"},
+    {model:"T2", series:"T", connection:"有线USB", driver:"50mm", features:["7.1虚拟环绕声","可拆卸麦","磁吸耳罩"], tags:["有线","7.1环绕","可拆卸麦"], desc:"T系列中端，7.1虚拟环绕，可拆卸麦克风，磁吸耳罩方便清洁。", suitable:"需要音质不错、方便打理的有线游戏耳机用户。"},
+    // M17系列
+    {model:"M17萌猫有线", series:"M17", connection:"有线USB", driver:"50mm", features:["猫耳RGB 7种灯效","7.1声卡","收缩降噪麦"], tags:["有线","猫耳","RGB","女性向"], desc:"萌系猫耳造型，7种RGB灯效，7.1独立声卡。", suitable:"喜欢可爱外观的女性玩家或送礼需求。"},
+    {model:"M17萌猫无线三模", series:"M17", connection:"三模(2.4G+蓝牙+3.5mm)", driver:"50mm", battery:"开灯13h/关灯47h", latency:"2.4G 25ms", features:["猫耳RGB","粉/紫双色","AI通话降噪"], tags:["无线","三模","猫耳","女性向"], desc:"无线萌猫，三模连接，RGB猫耳，粉紫双色可选。", suitable:"追求无线自由和可爱外形的用户。"},
+    // DM01MAX & X1
+    {model:"DM01MAX", series:"DM", connection:"五模(2.4G+蓝牙+有线)", features:["ANC主动降噪","可折叠","双芯无线"], tags:["无线","五模","主动降噪","可折叠"], desc:"五模旗舰，ANC主动降噪，可折叠方便携带。", suitable:"需要降噪、经常出差或通勤，同时兼顾游戏的用户。"},
+    {model:"X1", series:"X", connection:"四模(2.4G+蓝牙+有线+3.5mm)", driver:"50mm", features:["第三代7.1","战队联合调音"], tags:["无线","四模","7.1环绕"], desc:"X系列四模无线，职业战队联合调音，第三代7.1环绕。", suitable:"想要战队调音风格和高品质无线体验的玩家。"},
+    // V13系列
+    {model:"V13PRO", series:"V13", connection:"有线3.5mm", driver:"50mm", impedance:"32±15%Ω", weight:"约200g", features:["7.1环绕音效","冰感耳罩"], tags:["有线","7.1环绕","轻量"], desc:"入门高性价比，50mm单元，7.1环绕，冰感耳罩久戴不闷。", suitable:"预算百元内，需要基础游戏耳机和舒适度的用户。"},
+    {model:"V13粉猫", series:"V13", connection:"有线USB", driver:"50mm", cable:"2.2m", features:["粉色猫耳","7.1虚拟环绕"], tags:["有线","猫耳","粉色"], desc:"粉色猫耳限定款，USB接口，7.1环绕音效。", suitable:"喜欢粉色猫耳外观，预算较低的用户。"},
+    {model:"V13D", series:"V13", connection:"有线3.5mm", driver:"50mm", weight:"约200g", cable:"2.2m", features:["手游版","3.5mm直插"], tags:["有线","3.5mm","手机可用"], desc:"V13的3.5mm版，即插即用，适合手机和平板。", suitable:"手机/平板用户，需要简单有线耳机。"},
+    {model:"V13U", series:"V13", connection:"有线USB", driver:"40mm/50mm", impedance:"32Ω", sensitivity:"95±3dB", cable:"约2m", features:["一键7.1"], tags:["有线","7.1环绕"], desc:"USB电脑专用，一键开启7.1环绕声。", suitable:"台式机用户，需要USB有线7.1。"},
+    // MG系列
+    {model:"MG-1", series:"MG", connection:"有线3.5mm", driver:"10mm", impedance:"16Ω", sensitivity:"95±3dB", cable:"1.2m", features:["入耳式"], tags:["入耳式","手机可用"], desc:"入耳式手游耳机，轻便携带。", suitable:"手游玩家，需要轻便入耳式耳机。"},
+    {model:"MG-1 PRO", series:"MG", connection:"有线3.5mm", driver:"10mm", impedance:"16Ω", sensitivity:"95±3dB", cable:"1.2m", features:["兼容手机/电脑","USB声卡版可选"], tags:["入耳式","手机可用"], desc:"MG-1升级版，可搭配USB声卡使用。", suitable:"需要入耳式且偶尔连接电脑的玩家。"},
+    {model:"MG-2", series:"MG", connection:"有线3.5mm+USB声卡", driver:"10mm", cable:"1.6m", features:["物理振动反馈","可拆卸双麦"], tags:["入耳式","振动反馈"], desc:"带物理振动单元，增强游戏临场感。", suitable:"追求沉浸感的手游玩家。"},
+    {model:"MG-2S", series:"MG", connection:"有线3.5mm", driver:"10mm", features:["入耳式","7.1"], tags:["入耳式","7.1环绕"], desc:"MG-2升级版，入耳式7.1环绕游戏耳机。", suitable:"需要入耳式虚拟环绕声的玩家。"},
+    {model:"MG-2S声卡版", series:"MG", connection:"有线3.5mm+独立USB 7.1声卡", driver:"10mm", features:["独立声卡芯片","一键7.1","可插拔麦"], tags:["入耳式","7.1环绕","声卡"], desc:"配备独立USB声卡，一键开启7.1环绕，手游和电脑两用。", suitable:"既玩手游又用电脑，需要7.1声卡的入耳式耳机用户。"}
+];
+
+// 其他型号：R3i, S21无线智充版 等暂无详细参数的产品暂不加入列表。
+
+// 分类定义
+const seriesList = ["S21","S31","S11","K03","K02","K9","T10","T","M17","DM","X","V13","MG"];
+const connectionTypes = ["有线","无线","蓝牙","2.4G","四模","三模","五模","USB","3.5mm","Type-C"];
+const featureTags = ["高性价比","网吧适用","延迟低","主动降噪","超长续航","7.1环绕","猫耳","入耳式","FPS专精","轻量化","限定外观","粉色","双设备","石墨烯","可折叠"];
+
+// 辅助：根据标签筛选
+function filterByTag(tag) {
+    return products.filter(p => {
+        const allText = JSON.stringify(p).toLowerCase();
+        return allText.includes(tag.toLowerCase()) ||
+               p.tags?.some(t => t.toLowerCase().includes(tag.toLowerCase())) ||
+               p.features?.some(f => f.toLowerCase().includes(tag.toLowerCase())) ||
+               p.connection?.toLowerCase().includes(tag.toLowerCase()) ||
+               p.series?.toLowerCase() === tag.toLowerCase();
+    });
+}
+
+// 页面切换
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0,0);
+}
+
+function goHome() {
+    showPage('page-home');
+    document.getElementById('list-title').textContent = '';
+    document.getElementById('product-list').innerHTML = '';
+}
+
+let currentListFilter = null; // 存储当前列表筛选条件
+
+function showListPage(title, filteredProducts) {
+    showPage('page-list');
+    document.getElementById('list-title').textContent = title;
+    const grid = document.getElementById('product-list');
+    grid.innerHTML = '';
+    if(filteredProducts.length === 0) {
+        grid.innerHTML = '<p style="color:#a0a0b8;">没有找到匹配的产品。</p>';
+        return;
+    }
+    filteredProducts.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <h3>${p.model}</h3>
+            <div class="model">${p.series} 系列</div>
+            <div class="badges">
+                ${(p.tags||[]).slice(0,3).map(t => `<span class="badge">${t}</span>`).join('')}
+            </div>
+        `;
+        card.onclick = () => showDetail(p);
+        grid.appendChild(card);
+    });
+    currentListFilter = filteredProducts; // 保存以便返回
+}
+
+function showDetail(product) {
+    showPage('page-detail');
+    const container = document.getElementById('detail-content');
+    const specRows = [
+        ['型号', product.model],
+        ['系列', product.series],
+        ['连接方式', product.connection || '暂无'],
+        ['驱动单元', product.driver || '暂无'],
+        ['频响范围', product.freq || '暂无'],
+        ['阻抗', product.impedance || '暂无'],
+        ['灵敏度', product.sensitivity || '暂无'],
+        ['续航/电池', product.battery || '暂无'],
+        ['重量', product.weight || '暂无'],
+        ['线长', product.cable || '暂无'],
+        ['延迟', product.latency || '暂无'],
+        ['特色功能', (product.features||[]).join('、') || '暂无'],
+        ['标签', (product.tags||[]).join('、') || '暂无']
+    ];
+    container.innerHTML = `
+        <div class="detail-header">
+            <div class="detail-img">📷<br>产品图</div>
+            <div class="detail-title">
+                <h2>${product.model}</h2>
+                <div class="model-name">${product.series} 系列</div>
+                <p style="margin-top:10px; color:#c0c0d0;">${product.desc || ''}</p>
+                <p style="color:var(--accent); margin-top:8px;">👤 适合人群：${product.suitable || '游戏玩家'}</p>
+            </div>
+        </div>
+        <table class="spec-table">
+            ${specRows.filter(r => r[1] !== '暂无' && r[1] !== '').map(r => `
+                <tr><th>${r[0]}</th><td>${r[1]}</td></tr>
+            `).join('')}
+        </table>
+    `;
+}
+
+function goBackFromDetail() {
+    if (currentListFilter) {
+        showListPage(document.getElementById('list-title').textContent, currentListFilter);
+    } else {
+        goHome();
+    }
+}
+
+// 构建首页标签
+function buildHomeTags() {
+    // 系列
+    const seriesDiv = document.getElementById('series-tags');
+    seriesDiv.innerHTML = seriesList.map(s => {
+        const count = products.filter(p => p.series === s).length;
+        return `<span class="tag" onclick="showListPage('${s}系列 (${count}款)', filterByTag('${s}'))">${s}系列 (${count})</span>`;
+    }).join('');
+
+    // 连接方式
+    // 连接方式
+const connDiv = document.getElementById('conn-tags');
+connDiv.innerHTML = connectionTypes.map(c => {
+    return `<span class="tag" onclick="showListPage('连接方式: ${c}', filterByTag('${c}'))">${c} (${filterByTag(c).length})</span>`;
+}).join('');
+
+    // 功能特色
+const featDiv = document.getElementById('feature-tags');
+featDiv.innerHTML = featureTags.map(f => {
+    return `<span class="tag" onclick="showListPage('特色: ${f}', filterByTag('${f}'))">${f} (${filterByTag(f).length})</span>`;
+}).join('');
+}
+
+// ==================== 出题系统 ====================
+function generateQuestions() {
+    const questions = [];
+    // 单选题：挖空参数
+    const singleChoiceModels = products.filter(p => p.driver && p.battery && p.weight && p.model);
+    for (let i = 0; i < 10; i++) {
+        const p = singleChoiceModels[Math.floor(Math.random() * singleChoiceModels.length)];
+        const fields = [
+            {key:'driver', label:'驱动单元'},
+            {key:'battery', label:'续航/电池'},
+            {key:'weight', label:'重量'},
+            {key:'impedance', label:'阻抗'},
+            {key:'sensitivity', label:'灵敏度'},
+            {key:'cable', label:'线长'},
+            {key:'connection', label:'连接方式'}
+        ].filter(f => p[f.key] && p[f.key] !== '暂无');
+        if (fields.length === 0) continue;
+        const chosen = fields[Math.floor(Math.random() * fields.length)];
+        const correctAnswer = p[chosen.key];
+        // 生成错误选项：从其他产品中随机取该字段值
+        const otherValues = [...new Set(products.filter(op => op[chosen.key] && op[chosen.key] !== correctAnswer && op[chosen.key] !== '暂无').map(op => op[chosen.key]))];
+        const shuffled = otherValues.sort(() => Math.random() - 0.5).slice(0, 3);
+        const options = [...shuffled, correctAnswer].sort(() => Math.random() - 0.5);
+        questions.push({
+            type: 'single',
+            question: `${p.model} 的 ${chosen.label} 是多少？`,
+            options,
+            answer: correctAnswer,
+            explanation: `${p.model} 的 ${chosen.label} 为 ${correctAnswer}。`
+        });
+    }
+    // 多选题：选出所有符合特征的型号
+    const multiFeatures = [
+        {text:'支持四模连接', filter: p => p.connection && p.connection.includes('四模')},
+        {text:'带有7.1环绕音效', filter: p => p.tags?.includes('7.1环绕') || p.features?.some(f=>f.includes('7.1'))},
+        {text:'支持主动降噪(ANC)', filter: p => p.features?.some(f=>f.includes('ANC')||f.includes('主动降噪'))},
+        {text:'采用50mm驱动单元', filter: p => p.driver && p.driver.includes('50mm')},
+        {text:'属于S21系列', filter: p => p.series === 'S21'},
+        {text:'无线连接且续航超过100小时', filter: p => p.battery && (p.battery.includes('149h')||p.battery.includes('170h')||p.battery.includes('145h')||p.battery.includes('135h')||p.battery.includes('110h')||p.battery.includes('106h'))},
+        {text:'是入耳式耳机', filter: p => p.tags?.includes('入耳式')},
+        {text:'有猫耳外观', filter: p => p.tags?.includes('猫耳')},
+        {text:'属于K系列', filter: p => ['K02','K03','K9'].includes(p.series)},
+        {text:'重量小于250g', filter: p => p.weight && parseFloat(p.weight) < 250}
+    ];
+    for (let mf of multiFeatures) {
+        const correctModels = products.filter(mf.filter).map(p => p.model);
+        if (correctModels.length < 2) continue;
+        // 生成干扰项：从不符的型号中随机选2-3个
+        const incorrectModels = products.filter(p => !mf.filter(p)).map(p => p.model);
+        const distractors = incorrectModels.sort(() => Math.random() - 0.5).slice(0, Math.min(3, incorrectModels.length));
+        const allOptions = [...correctModels, ...distractors].sort(() => Math.random() - 0.5);
+        questions.push({
+            type: 'multi',
+            question: `以下哪些型号 ${mf.text}？（多选）`,
+            options: allOptions,
+            answer: correctModels,
+            explanation: `符合条件的型号：${correctModels.join('、')}`
+        });
+    }
+    return questions.sort(() => Math.random() - 0.5).slice(0, 12);
+}
+
+let currentQuiz = [];
+let currentIndex = 0;
+let userAnswers = [];
+
+function startQuiz() {
+    currentQuiz = generateQuestions();
+    currentIndex = 0;
+    userAnswers = new Array(currentQuiz.length).fill(null);
+    showPage('page-quiz');
+    renderQuiz();
+}
+
+function renderQuiz() {
+    const area = document.getElementById('quiz-area');
+    if (currentIndex >= currentQuiz.length) {
+        // 计算得分
+        let score = 0;
+        currentQuiz.forEach((q, i) => {
+            const ua = userAnswers[i];
+            if (!ua) return;
+            if (q.type === 'single' && ua === q.answer) score++;
+            if (q.type === 'multi' && Array.isArray(ua) && arraysEqual(ua.sort(), q.answer.sort())) score++;
+        });
+        area.innerHTML = `
+            <h3 style="color:var(--accent);">测验完成！</h3>
+            <p>你的得分：${score} / ${currentQuiz.length}</p>
+            <button class="btn btn-accent mt-3" onclick="reviewQuiz()">查看答案</button>
+            <button class="btn mt-3" onclick="startQuiz()">重新出题</button>
+        `;
+        return;
+    }
+    const q = currentQuiz[currentIndex];
+    let optionsHtml = '';
+    if (q.type === 'single') {
+        optionsHtml = q.options.map((opt, idx) => `
+            <div class="quiz-option" id="opt-${idx}" onclick="selectSingle('${opt}')">${opt}</div>
+        `).join('');
+    } else {
+        const selected = userAnswers[currentIndex] || [];
+        optionsHtml = q.options.map((opt, idx) => `
+            <div class="quiz-option ${selected.includes(opt)?'selected':''}" id="opt-${idx}" onclick="toggleMulti('${opt}')">${opt}</div>
+        `).join('');
+    }
+    area.innerHTML = `
+        <h3 style="color:#fff;">第 ${currentIndex+1} / ${currentQuiz.length} 题</h3>
+        <div class="quiz-question">${q.question}</div>
+        <div class="quiz-options">${optionsHtml}</div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" ${currentIndex===0?'disabled':''}>上一题</button>
+            <button class="btn btn-accent" onclick="nextQuestion()">下一题</button>
+            ${q.type === 'multi' ? '<button class="btn btn-outline" onclick="submitMulti()">提交答案</button>' : ''}
+        </div>
+        <div class="quiz-feedback" id="feedback"></div>
+    `;
+}
+
+function selectSingle(val) {
+    userAnswers[currentIndex] = val;
+    document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+    event.target.classList.add('selected');
+    // 自动下一题
+    setTimeout(() => nextQuestion(), 300);
+}
+
+function toggleMulti(val) {
+    if (!userAnswers[currentIndex]) userAnswers[currentIndex] = [];
+    const arr = userAnswers[currentIndex];
+    if (arr.includes(val)) {
+        userAnswers[currentIndex] = arr.filter(v => v !== val);
+    } else {
+        userAnswers[currentIndex] = [...arr, val];
+    }
+    renderQuiz();
+}
+
+function submitMulti() {
+    const q = currentQuiz[currentIndex];
+    const userSel = userAnswers[currentIndex] || [];
+    const feedback = document.getElementById('feedback');
+    if (arraysEqual(userSel.sort(), q.answer.sort())) {
+        feedback.innerHTML = '<span style="color:var(--success);">✔ 回答正确！</span> ' + q.explanation;
+    } else {
+        feedback.innerHTML = '<span style="color:var(--danger);">✘ 回答错误。</span> ' + q.explanation;
+    }
+    // 禁用选项
+    document.querySelectorAll('.quiz-option').forEach(el => el.style.pointerEvents = 'none');
+}
+
+function nextQuestion() {
+    if (currentIndex < currentQuiz.length - 1) {
+        currentIndex++;
+        renderQuiz();
+    } else {
+        currentIndex++;
+        renderQuiz();
+    }
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        renderQuiz();
+    }
+}
+
+function reviewQuiz() {
+    let html = '';
+    currentQuiz.forEach((q, i) => {
+        const ua = userAnswers[i];
+        let status = '';
+        if (q.type === 'single') status = (ua === q.answer) ? '✔' : '✘';
+        else status = (Array.isArray(ua) && arraysEqual(ua.sort(), q.answer.sort())) ? '✔' : '✘';
+        html += `<div style="margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
+            <strong>${i+1}. ${q.question}</strong> <span style="color:${status==='✔'?'var(--success)':'var(--danger)'}">${status}</span><br>
+            <span style="color:#aaa;">正确答案：${Array.isArray(q.answer)?q.answer.join('、'):q.answer}</span><br>
+            <small>${q.explanation}</small>
+        </div>`;
+    });
+    const area = document.getElementById('quiz-area');
+    area.innerHTML = `<h3>答案回顾</h3>${html}<button class="btn mt-3" onclick="startQuiz()">重新出题</button>`;
+}
+
+function arraysEqual(a, b) {
+    if (a.length !== b.length) return false;
+    for (let i=0; i<a.length; i++) if (a[i] !== b[i]) return false;
+    return true;
+}
+
+// 初始化
+buildHomeTags();
+</script>
+</body>
+</html>
